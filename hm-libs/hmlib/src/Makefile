@@ -17,10 +17,10 @@
 
 
 
-pkgdatadir = $(datadir)/libhmshare
-pkgincludedir = $(includedir)/libhmshare
-pkglibdir = $(libdir)/libhmshare
-pkglibexecdir = $(libexecdir)/libhmshare
+pkgdatadir = $(datadir)/libhmlib
+pkgincludedir = $(includedir)/libhmlib
+pkglibdir = $(libdir)/libhmlib
+pkglibexecdir = $(libexecdir)/libhmlib
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -36,10 +36,13 @@ POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
 host_triplet = x86_64-unknown-linux-gnu
 subdir = src
-DIST_COMMON = $(libhmshareinclude_HEADERS) $(srcdir)/Makefile.am \
+DIST_COMMON = $(libhmlibinclude_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.in
+am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -74,17 +77,16 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 am__installdirs = "$(DESTDIR)$(libdir)" \
-	"$(DESTDIR)$(libhmshareincludedir)"
-LIBRARIES = $(lib_LIBRARIES)
-ARFLAGS = cru
-libhmshare_a_AR = $(AR) $(ARFLAGS)
-libhmshare_a_LIBADD =
-am_libhmshare_a_OBJECTS = hm_debug.$(OBJEXT) hm_signal.$(OBJEXT) \
-	hm_conn.$(OBJEXT) hm_fragments.$(OBJEXT) hm_hlio.$(OBJEXT) \
-	hm_io.$(OBJEXT) hm_netbuf.$(OBJEXT) hm_net.$(OBJEXT) \
-	hm_netio.$(OBJEXT) hm_watch.$(OBJEXT) hm_rw_file.$(OBJEXT) \
-	hm_timer.$(OBJEXT)
-libhmshare_a_OBJECTS = $(am_libhmshare_a_OBJECTS)
+	"$(DESTDIR)$(libhmlibincludedir)"
+LTLIBRARIES = $(lib_LTLIBRARIES)
+libhmlib_la_DEPENDENCIES = $(HOME)/usr/lib/libev.a
+am_libhmlib_la_OBJECTS = j_mem.lo j_list.lo j_queue.lo j_asyncqueue.lo \
+	j_thread.lo j_thread_posix.lo j_thread_windows.lo \
+	j_threadpool.lo j_event.lo j_sched.lo j_base64.lo
+libhmlib_la_OBJECTS = $(am_libhmlib_la_OBJECTS)
+libhmlib_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(libhmlib_la_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -98,18 +100,18 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libhmshare_a_SOURCES)
-DIST_SOURCES = $(libhmshare_a_SOURCES)
-HEADERS = $(libhmshareinclude_HEADERS)
+SOURCES = $(libhmlib_la_SOURCES)
+DIST_SOURCES = $(libhmlib_la_SOURCES)
+HEADERS = $(libhmlibinclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/missing --run aclocal-1.11
+ACLOCAL = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/missing --run aclocal-1.11
 AMTAR = $${TAR-tar}
 AR = ar
-AUTOCONF = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/missing --run automake-1.11
+AUTOCONF = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/missing --run automake-1.11
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -136,13 +138,15 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = 
+LIBHMLIB_SO_VERSION = 2:0:1
+LIBHMLIB_VERSION = 1.1.0
 LIBOBJS = 
 LIBS = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/missing --run makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
@@ -151,13 +155,13 @@ OBJDUMP = objdump
 OBJEXT = o
 OTOOL = 
 OTOOL64 = 
-PACKAGE = libhmshare
-PACKAGE_BUGREPORT = bugs@himonkey.com
-PACKAGE_NAME = libhmshare
-PACKAGE_STRING = libhmshare 2.8.0
-PACKAGE_TARNAME = libhmshare
+PACKAGE = libhmlib
+PACKAGE_BUGREPORT = bugs@himickey.com
+PACKAGE_NAME = libhmlib
+PACKAGE_STRING = libhmlib 1.1.0
+PACKAGE_TARNAME = libhmlib
 PACKAGE_URL = 
-PACKAGE_VERSION = 2.8.0
+PACKAGE_VERSION = 1.1.0
 PATH_SEPARATOR = :
 PKG_CONFIG = /usr/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
@@ -167,11 +171,11 @@ SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = strip
-VERSION = 2.8.0
-abs_builddir = /home/compiler/hm-platform/trunk/hm-libs/hmshare/src
-abs_srcdir = /home/compiler/hm-platform/trunk/hm-libs/hmshare/src
-abs_top_builddir = /home/compiler/hm-platform/trunk/hm-libs/hmshare
-abs_top_srcdir = /home/compiler/hm-platform/trunk/hm-libs/hmshare
+VERSION = 1.1.0
+abs_builddir = /home/compiler/hm-platform/trunk/hm-libs/hmlib/src
+abs_srcdir = /home/compiler/hm-platform/trunk/hm-libs/hmlib/src
+abs_top_builddir = /home/compiler/hm-platform/trunk/hm-libs/hmlib
+abs_top_srcdir = /home/compiler/hm-platform/trunk/hm-libs/hmlib
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -200,13 +204,9 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/install-sh
+install_sh = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
-libglib_CFLAGS = -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include  
-libglib_LIBS = -lglib-2.0  
-libgthread_CFLAGS = -pthread -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include  
-libgthread_LIBS = -pthread -lgthread-2.0 -lrt -lglib-2.0  
 localedir = ${datarootdir}/locale
 localstatedir = ${prefix}/var
 mandir = ${datarootdir}/man
@@ -225,34 +225,25 @@ top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
 AUTOMAKE_OPTIONS = foreign
-lib_LIBRARIES = libhmshare.a
-libhmshare_a_SOURCES = hm_debug.c	\
-                      hm_signal.c \
-                      hm_conn.c \
-                      hm_fragments.c \
-                      hm_fragments.h \
-                      hm_hlio.c \
-                      hm_hlio.h \
-                      hm_io.c \
-                      hm_io.h \
-                      hm_netbuf.c \
-                      hm_netbuf.h \
-                      hm_net.c \
-                      hm_netio.c \
-                      hm_watch.c \
-                      hm_watch.h \
-                      hm_rw_file.c \
-                      hm_timer.c
+lib_LTLIBRARIES = libhmlib.la
+libhmlib_la_SOURCES = j_mem.c \
+ 		   j_list.c \
+		   j_queue.c \
+		   j_asyncqueue.c \
+		   j_thread.c \
+		   j_thread_posix.c \
+		   j_thread_windows.c \
+		   j_threadpool.c \
+		   j_event.c \
+		   j_sched.c \
+		   j_base64.c
 
+libhmlib_la_LIBADD = $(HOME)/usr/lib/libev.a
+libhmlib_la_LDFLAGS = -no-undefined -version-info $(LIBHMLIB_SO_VERSION)
+libhmlibincludedir = $(prefix)/include/himickey
+libhmlibinclude_HEADERS = $(top_srcdir)/include/*.h \
+		      $(HOME)/usr/include/*.h 
 
-#libhmshare_la_LIBADD=
-
-#libhmshare_la_LDFLAGS=-version-info $(libhmshare_SO_VERSION)
-#libhmshare_la_LIBFLAGS=shared
-libhmshare_la_CFLAGS = -Wall -g -fno-inline -fstack-protector -fPIC
-#libhmshare_la_CXXFLAGS=
-libhmshareincludedir = $(prefix)/include/himickey
-libhmshareinclude_HEADERS = $(top_srcdir)/include/*.h
 all: all-am
 
 .SUFFIXES:
@@ -287,40 +278,39 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-install-libLIBRARIES: $(lib_LIBRARIES)
+install-libLTLIBRARIES: $(lib_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
 	test -z "$(libdir)" || $(MKDIR_P) "$(DESTDIR)$(libdir)"
-	@list='$(lib_LIBRARIES)'; test -n "$(libdir)" || list=; \
+	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
 	list2=; for p in $$list; do \
 	  if test -f $$p; then \
 	    list2="$$list2 $$p"; \
 	  else :; fi; \
 	done; \
 	test -z "$$list2" || { \
-	  echo " $(INSTALL_DATA) $$list2 '$(DESTDIR)$(libdir)'"; \
-	  $(INSTALL_DATA) $$list2 "$(DESTDIR)$(libdir)" || exit $$?; }
-	@$(POST_INSTALL)
-	@list='$(lib_LIBRARIES)'; test -n "$(libdir)" || list=; \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(libdir)'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(libdir)"; \
+	}
+
+uninstall-libLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
 	for p in $$list; do \
-	  if test -f $$p; then \
-	    $(am__strip_dir) \
-	    echo " ( cd '$(DESTDIR)$(libdir)' && $(RANLIB) $$f )"; \
-	    ( cd "$(DESTDIR)$(libdir)" && $(RANLIB) $$f ) || exit $$?; \
-	  else :; fi; \
+	  $(am__strip_dir) \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(libdir)/$$f'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(libdir)/$$f"; \
 	done
 
-uninstall-libLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(lib_LIBRARIES)'; test -n "$(libdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(libdir)'; $(am__uninstall_files_from_dir)
-
-clean-libLIBRARIES:
-	-test -z "$(lib_LIBRARIES)" || rm -f $(lib_LIBRARIES)
-libhmshare.a: $(libhmshare_a_OBJECTS) $(libhmshare_a_DEPENDENCIES) $(EXTRA_libhmshare_a_DEPENDENCIES) 
-	-rm -f libhmshare.a
-	$(libhmshare_a_AR) libhmshare.a $(libhmshare_a_OBJECTS) $(libhmshare_a_LIBADD)
-	$(RANLIB) libhmshare.a
+clean-libLTLIBRARIES:
+	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
+	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
+	  test "$$dir" != "$$p" || dir=.; \
+	  echo "rm -f \"$${dir}/so_locations\""; \
+	  rm -f "$${dir}/so_locations"; \
+	done
+libhmlib.la: $(libhmlib_la_OBJECTS) $(libhmlib_la_DEPENDENCIES) $(EXTRA_libhmlib_la_DEPENDENCIES) 
+	$(libhmlib_la_LINK) -rpath $(libdir) $(libhmlib_la_OBJECTS) $(libhmlib_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -328,18 +318,17 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/hm_conn.Po
-include ./$(DEPDIR)/hm_debug.Po
-include ./$(DEPDIR)/hm_fragments.Po
-include ./$(DEPDIR)/hm_hlio.Po
-include ./$(DEPDIR)/hm_io.Po
-include ./$(DEPDIR)/hm_net.Po
-include ./$(DEPDIR)/hm_netbuf.Po
-include ./$(DEPDIR)/hm_netio.Po
-include ./$(DEPDIR)/hm_rw_file.Po
-include ./$(DEPDIR)/hm_signal.Po
-include ./$(DEPDIR)/hm_timer.Po
-include ./$(DEPDIR)/hm_watch.Po
+include ./$(DEPDIR)/j_asyncqueue.Plo
+include ./$(DEPDIR)/j_base64.Plo
+include ./$(DEPDIR)/j_event.Plo
+include ./$(DEPDIR)/j_list.Plo
+include ./$(DEPDIR)/j_mem.Plo
+include ./$(DEPDIR)/j_queue.Plo
+include ./$(DEPDIR)/j_sched.Plo
+include ./$(DEPDIR)/j_thread.Plo
+include ./$(DEPDIR)/j_thread_posix.Plo
+include ./$(DEPDIR)/j_thread_windows.Plo
+include ./$(DEPDIR)/j_threadpool.Plo
 
 .c.o:
 	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -367,24 +356,24 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-install-libhmshareincludeHEADERS: $(libhmshareinclude_HEADERS)
+install-libhmlibincludeHEADERS: $(libhmlibinclude_HEADERS)
 	@$(NORMAL_INSTALL)
-	test -z "$(libhmshareincludedir)" || $(MKDIR_P) "$(DESTDIR)$(libhmshareincludedir)"
-	@list='$(libhmshareinclude_HEADERS)'; test -n "$(libhmshareincludedir)" || list=; \
+	test -z "$(libhmlibincludedir)" || $(MKDIR_P) "$(DESTDIR)$(libhmlibincludedir)"
+	@list='$(libhmlibinclude_HEADERS)'; test -n "$(libhmlibincludedir)" || list=; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  echo "$$d$$p"; \
 	done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(libhmshareincludedir)'"; \
-	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(libhmshareincludedir)" || exit $$?; \
+	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(libhmlibincludedir)'"; \
+	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(libhmlibincludedir)" || exit $$?; \
 	done
 
-uninstall-libhmshareincludeHEADERS:
+uninstall-libhmlibincludeHEADERS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(libhmshareinclude_HEADERS)'; test -n "$(libhmshareincludedir)" || list=; \
+	@list='$(libhmlibinclude_HEADERS)'; test -n "$(libhmlibincludedir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(libhmshareincludedir)'; $(am__uninstall_files_from_dir)
+	dir='$(DESTDIR)$(libhmlibincludedir)'; $(am__uninstall_files_from_dir)
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -470,9 +459,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LIBRARIES) $(HEADERS)
+all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libhmshareincludedir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libhmlibincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -507,7 +496,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libLIBRARIES clean-libtool \
+clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
@@ -528,13 +517,13 @@ info: info-am
 
 info-am:
 
-install-data-am: install-libhmshareincludeHEADERS
+install-data-am: install-libhmlibincludeHEADERS
 
 install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-libLIBRARIES
+install-exec-am: install-libLTLIBRARIES
 
 install-html: install-html-am
 
@@ -574,26 +563,26 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-libLIBRARIES \
-	uninstall-libhmshareincludeHEADERS
+uninstall-am: uninstall-libLTLIBRARIES \
+	uninstall-libhmlibincludeHEADERS
 
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libLIBRARIES clean-libtool ctags distclean \
+	clean-libLTLIBRARIES clean-libtool ctags distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am \
-	install-libLIBRARIES install-libhmshareincludeHEADERS \
+	install-libLTLIBRARIES install-libhmlibincludeHEADERS \
 	install-man install-pdf install-pdf-am install-ps \
 	install-ps-am install-strip installcheck installcheck-am \
 	installdirs maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-libLIBRARIES \
-	uninstall-libhmshareincludeHEADERS
+	uninstall-am uninstall-libLTLIBRARIES \
+	uninstall-libhmlibincludeHEADERS
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

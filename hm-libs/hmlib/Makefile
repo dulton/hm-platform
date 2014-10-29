@@ -16,10 +16,10 @@
 
 
 
-pkgdatadir = $(datadir)/libhmshare
-pkgincludedir = $(includedir)/libhmshare
-pkglibdir = $(libdir)/libhmshare
-pkglibexecdir = $(libexecdir)/libhmshare
+pkgdatadir = $(datadir)/libhmlib
+pkgincludedir = $(includedir)/libhmlib
+pkglibdir = $(libdir)/libhmlib
+pkglibexecdir = $(libexecdir)/libhmlib
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -35,19 +35,23 @@ POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
 host_triplet = x86_64-unknown-linux-gnu
 subdir = .
-DIST_COMMON = $(am__configure_deps) $(srcdir)/Makefile.am \
+DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(srcdir)/libhmshare.pc.in $(top_srcdir)/configure \
-	config.guess config.sub depcomp install-sh ltmain.sh missing
+	$(srcdir)/libhmlib.pc.in $(top_srcdir)/configure AUTHORS \
+	ChangeLog NEWS config.guess config.sub depcomp install-sh \
+	ltmain.sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.in
+am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES = libhmshare.pc
+CONFIG_CLEAN_FILES = libhmlib.pc
 CONFIG_CLEAN_VPATH_FILES =
 SOURCES =
 DIST_SOURCES =
@@ -135,12 +139,12 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/missing --run aclocal-1.11
+ACLOCAL = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/missing --run aclocal-1.11
 AMTAR = $${TAR-tar}
 AR = ar
-AUTOCONF = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/missing --run automake-1.11
+AUTOCONF = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/missing --run automake-1.11
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -167,13 +171,15 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = 
+LIBHMLIB_SO_VERSION = 2:0:1
+LIBHMLIB_VERSION = 1.1.0
 LIBOBJS = 
 LIBS = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/missing --run makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
@@ -182,13 +188,13 @@ OBJDUMP = objdump
 OBJEXT = o
 OTOOL = 
 OTOOL64 = 
-PACKAGE = libhmshare
-PACKAGE_BUGREPORT = bugs@himonkey.com
-PACKAGE_NAME = libhmshare
-PACKAGE_STRING = libhmshare 2.8.0
-PACKAGE_TARNAME = libhmshare
+PACKAGE = libhmlib
+PACKAGE_BUGREPORT = bugs@himickey.com
+PACKAGE_NAME = libhmlib
+PACKAGE_STRING = libhmlib 1.1.0
+PACKAGE_TARNAME = libhmlib
 PACKAGE_URL = 
-PACKAGE_VERSION = 2.8.0
+PACKAGE_VERSION = 1.1.0
 PATH_SEPARATOR = :
 PKG_CONFIG = /usr/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
@@ -198,11 +204,11 @@ SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = strip
-VERSION = 2.8.0
-abs_builddir = /home/compiler/hm-platform/trunk/hm-libs/hmshare
-abs_srcdir = /home/compiler/hm-platform/trunk/hm-libs/hmshare
-abs_top_builddir = /home/compiler/hm-platform/trunk/hm-libs/hmshare
-abs_top_srcdir = /home/compiler/hm-platform/trunk/hm-libs/hmshare
+VERSION = 1.1.0
+abs_builddir = /home/compiler/hm-platform/trunk/hm-libs/hmlib
+abs_srcdir = /home/compiler/hm-platform/trunk/hm-libs/hmlib
+abs_top_builddir = /home/compiler/hm-platform/trunk/hm-libs/hmlib
+abs_top_srcdir = /home/compiler/hm-platform/trunk/hm-libs/hmlib
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -231,13 +237,9 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmshare/install-sh
+install_sh = ${SHELL} /home/compiler/hm-platform/trunk/hm-libs/hmlib/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
-libglib_CFLAGS = -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include  
-libglib_LIBS = -lglib-2.0  
-libgthread_CFLAGS = -pthread -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include  
-libgthread_LIBS = -pthread -lgthread-2.0 -lrt -lglib-2.0  
 localedir = ${datarootdir}/locale
 localstatedir = ${prefix}/var
 mandir = ${datarootdir}/man
@@ -255,13 +257,17 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-SUBDIRS = src
-CURRENTPATH = $(PWD)
-GLIB_VERSION = 2.0
-GLIB_LIBS = glib-${GLIB_VERSION} gobject-${GLIB_VERSION} gthread-${GLIB_VERSION}
-INCLUDES = -I$(CURRENTPATH)/include -I$(shell pkg-config --cflags ${GLIB_LIBS})
+
+#!/bin/sh
+SUBDIRS = src test
+CURRENTPATH = $(shell /bin/pwd)
+INCLUDES = -I$(CURRENTPATH) \
+	 -I$(CURRENTPATH)/include \
+	 -I$(HOME)/usr/include
+
+ACLOCAL_AMFLAGS = -I m4
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libhmshare.pc
+pkgconfig_DATA = libhmlib.pc
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -315,7 +321,7 @@ $(srcdir)/config.h.in:  $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
-libhmshare.pc: $(top_builddir)/config.status $(srcdir)/libhmshare.pc.in
+libhmlib.pc: $(top_builddir)/config.status $(srcdir)/libhmlib.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:
