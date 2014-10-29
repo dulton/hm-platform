@@ -1,0 +1,12 @@
+prefix=/home/compiler/usr
+exec_prefix=/home/compiler/usr
+libdir=/home/compiler/usr/lib
+includedir=/home/compiler/usr/inc
+
+Name: Mini-XML
+Description: Lightweight XML support library
+Version: 2.2.2
+Libs: -L${exec_prefix}/lib -lmxml
+Cflags: -I${includedir}
+# Libs: -L${exec_prefix}/lib -lmxml
+# Cflags: -I${prefix}/include
