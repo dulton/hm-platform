@@ -1,0 +1,14 @@
+autoconfSamp pkg-config source file
+#
+prefix=/home/compiler/usr
+exec_prefix=${prefix}
+libdir=/home/compiler/usr/lib
+includedir=/home/compiler/usr/inc
+
+Name: libhmshare
+Description: libhmshare is a shared library used by HiMickey Video Surveillance System, Copyright (c) 2011 ~ 2012, HiMickey. 
+
+Version: 2.8.0
+Requires:
+Libs: -L${exec_prefix}/lib -lhmshare
+Cflags: -I${includedir}
