@@ -1,0 +1,68 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.67])
+AC_INIT(libhmlib, 1.1.0, bugs@himickey.com)
+AC_CONFIG_SRCDIR(test/main.c)
+AC_CONFIG_HEADERS(config.h)
+AC_CONFIG_MACRO_DIR(m4)
+AM_INIT_AUTOMAKE(foreign)
+
+: ${CFLAGS=""}
+
+##########################part two##################################
+PACKAGE=libhmlib
+
+AC_MSG_NOTICE([$PACKAGE_NAME-$PACKAGE_VERSION		A library for xxxxxx.])
+LIBHMLIB_MAJOR_VERSION=$(echo $PACKAGE_VERSION | cut -d. -f1)
+LIBHMLIB_MINOR_VERSION=$(echo $PACKAGE_VERSION | cut -d. -f2)
+LIBHMLIB_MICRO_VERSION=$(echo $PACKAGE_VERSION | cut -d. -f3)
+LIBHMLIB_EXTRA_VERSION=$(echo $PACKAGE_VERSION | cut -d. -f4)
+
+LIBHMLIB_SO_VERSION=`expr $LIBHMLIB_MINOR_VERSION + $LIBHMLIB_MAJOR_VERSION`:$LIBHMLIB_MICRO_VERSION:$LIBHMLIB_MINOR_VERSION
+AC_SUBST(LIBHMLIB_SO_VERSION, $LIBHMLIB_SO_VERSION)
+
+LIBHMLIB_VERSION=${LIBHMLIB_MAJOR_VERSION}.${LIBHMLIB_MINOR_VERSION}.${LIBHMLIB_MICRO_VERSION}
+
+if test -n "$LIBHMLIB_EXTRA_VERSION" ; then
+	LIBHMLIB_VERSION="${LIBHMLIB_VERSION}.${LIBHMLIB_EXTRA_VERSION}"
+fi
+
+AC_SUBST(LIBHMLIB_VERSION)
+AC_DEFINE_UNQUOTED(LIBHMLIB_MAJOR_VERSION,$LIBHMLIB_MAJOR_VERSION, [major version])
+AC_DEFINE_UNQUOTED(LIBHMLIB_MINOR_VERSION,$LIBHMLIB_MINOR_VERSION, [minor version])
+AC_DEFINE_UNQUOTED(LIBHMLIB_MICRO_VERSION,$LIBHMLIB_MICRO_VERSION, [micro version])
+AC_DEFINE_UNQUOTED(LIBHMLIB_VERSION,"$LIBHMLIB_VERSION",[LIBHMLIB version number])
+##################################################################
+# Checks for programs.
+AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+
+# AC_PROG_RANLIB
+AC_PROG_LIBTOOL
+
+# Checks for libraries.
+
+# Checks for header files.
+AC_CHECK_HEADERS([stddef.h stdlib.h string.h unistd.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_TYPE_SIZE_T
+
+# Checks for library functions.
+AC_FUNC_MALLOC
+AC_CHECK_FUNCS([memset])
+
+PKG_PROG_PKG_CONFIG()
+
+AC_MSG_NOTICE([FOUND CFLAGS DEFINES : "$CFLAGS"])
+AC_MSG_NOTICE([FOUND CPPFLAGS DEFINES : "$CPPFLAGS"])
+AC_MSG_NOTICE([FOUND LIBS DEFINES : "$LIBS"])
+
+AC_OUTPUT([Makefile
+	   libhmlib.pc
+	   src/Makefile
+	   test/Makefile])
