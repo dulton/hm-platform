@@ -11,6 +11,7 @@ libhmlib_la_SOURCES=hm_mem.c \
 		   hm_event.c \
 		   hm_sched.c \
 		   hm_base64.c
+libhmlib_la_CFLAGS=-fPIC
 libhmlib_la_LIBADD=$(HOME)/usr/lib/libev.a
 libhmlib_la_LDFLAGS=-no-undefined -version-info $(LIBHMLIB_SO_VERSION)
 
