@@ -1,0 +1,13 @@
+prefix=/home/compiler/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libnetembryo
+Description: network sockets abstraction library
+Version: 0.1.1
+Requires.private: openssl >= 0.9.8
+Libs: -L${libdir} -lnetembryo
+Libs.private:  
+Cflags: -I${includedir}
+

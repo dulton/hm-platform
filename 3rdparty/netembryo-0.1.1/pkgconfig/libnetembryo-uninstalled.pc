@@ -1,0 +1,11 @@
+libdir=/home/compiler/hm-platform/trunk/3rdparty/netembryo-0.1.1/.libs
+includedir=/home/compiler/hm-platform/trunk/3rdparty/netembryo-0.1.1
+
+Name: libnetembryo
+Description: network sockets abstraction library
+Version: 0.1.1
+Requires.private: openssl >= 0.9.8
+Libs: -L${libdir} -lnetembryo
+Libs.private: 
+Cflags: -I${includedir}
+
