@@ -12,8 +12,8 @@ libhmlib_la_SOURCES=hm_mem.c \
 		   hm_sched.c \
 		   hm_base64.c
 libhmlib_la_CFLAGS=-fPIC
-libhmlib_la_LIBADD=$(HOME)/usr/lib/libev.a
-libhmlib_la_LDFLAGS=-no-undefined -version-info $(LIBHMLIB_SO_VERSION)
+libhmlib_la_LIBADD=$(HMDEV_LIB_INSTALL)/lib/libev.a
+libhmlib_la_LDFLAGS=-fPIC -no-undefined -version-info $(LIBHMLIB_SO_VERSION)
 
 libhmlibincludedir=$(prefix)/include/himickey
 libhmlibinclude_HEADERS=$(top_srcdir)/include/*.h
