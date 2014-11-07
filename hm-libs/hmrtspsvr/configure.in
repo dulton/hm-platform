@@ -1,0 +1,71 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.68])
+AC_INIT([libhmrtspsvr], [1.2.0], [bugs@himonkey.com])
+AC_CONFIG_SRCDIR([src/rtsp-server.c])
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
+AM_INIT_AUTOMAKE(foreign)
+
+: ${CFLAGS=""}
+
+##########################part two##################################
+PACKAGE=libhmrtspsvr
+
+AC_MSG_NOTICE([$PACKAGE_NAME-$PACKAGE_VERSION		A library for xxxxxx.])
+LIBHMRTSPSVR_MAJOR_VERSION=$(echo $PACKAGE_VERSION | cut -d. -f1)
+LIBHMRTSPSVR_MINOR_VERSION=$(echo $PACKAGE_VERSION | cut -d. -f2)
+LIBHMRTSPSVR_MICRO_VERSION=$(echo $PACKAGE_VERSION | cut -d. -f3)
+LIBHMRTSPSVR_EXTRA_VERSION=$(echo $PACKAGE_VERSION | cut -d. -f4)
+
+LIBHMRTSPSVR_SO_VERSION=`expr $LIBHMRTSPSVR_MINOR_VERSION + $LIBHMRTSPSVR_MAJOR_VERSION`:$LIBHMRTSPSVR_MICRO_VERSION:$LIBHMRTSPSVR_MINOR_VERSION
+AC_SUBST(LIBHMRTSPSVR_SO_VERSION, $LIBHMRTSPSVR_SO_VERSION)
+
+LIBHMRTSPSVR_VERSION=${LIBHMRTSPSVR_MAJOR_VERSION}.${LIBHMRTSPSVR_MINOR_VERSION}.${LIBHMRTSPSVR_MICRO_VERSION}
+
+if test -n "$LIBHMRTSPSVR_EXTRA_VERSION" ; then
+	LIBHMRTSPSVR_VERSION="${LIBHMRTSPSVR_VERSION}.${LIBHMRTSPSVR_EXTRA_VERSION}"
+fi
+
+AC_SUBST(LIBHMRTSPSVR_VERSION)
+AC_DEFINE_UNQUOTED(LIBHMRTSPSVR_MAJOR_VERSION,$LIBHMRTSPSVR_MAJOR_VERSION, [major version])
+AC_DEFINE_UNQUOTED(LIBHMRTSPSVR_MINOR_VERSION,$LIBHMRTSPSVR_MINOR_VERSION, [minor version])
+AC_DEFINE_UNQUOTED(LIBHMRTSPSVR_MICRO_VERSION,$LIBHMRTSPSVR_MICRO_VERSION, [micro version])
+AC_DEFINE_UNQUOTED(LIBHMRTSPSVR_VERSION,"$LIBHMRTSPSVR_VERSION",[LIBHMRTSPSVR version number])
+##################################################################
+
+# Checks for programs.
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+
+# Checks for libraries.
+AC_PROG_LIBTOOL
+LT_INIT
+
+
+# Checks for header files.
+AC_CHECK_HEADERS([sys/time.h sys/timeb.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_C_INLINE
+AC_TYPE_UINT32_T
+AC_TYPE_UINT8_T
+
+# Checks for library functions.
+AC_CHECK_FUNCS([gettimeofday strchr strrchr strstr])
+
+dnl initialize pkg-config so that we can use it within if else fi statements.
+PKG_PROG_PKG_CONFIG()
+
+AC_MSG_NOTICE([FOUND CFLAGS DEFINES : "$CFLAGS"])
+AC_MSG_NOTICE([FOUND CPPFLAGS DEFINES : "$CPPFLAGS"])
+AC_MSG_NOTICE([FOUND LIBS DEFINES : "$LIBS"])
+
+AC_CONFIG_FILES([Makefile
+		libhmrtspsvr.pc
+		src/Makefile
+		test/Makefile])
+
+AC_OUTPUT
